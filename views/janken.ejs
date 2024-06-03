@@ -1,0 +1,39 @@
+<!Doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Show message</title>
+</head>
+<body>
+  <h2>結果</h2>
+  <p><%= your_hand %></p><!-- 変数を３つ加えた -->
+  <p2><%= my_hand %><br/></p2>
+  <p3><%= hantei %></p3>
+  <form action="/app/janken"><!--　formを追加した -->
+  <input type="text" name="hand" required>
+  <label for="hand">何を出す?</label>
+  <input type="submit" values="じゃんけん ポン">
+  </form>
+  <hr>
+  <form acction="/app/janken">
+  <input type="radio" name="hand" value="gu" checked>
+  <label for="gu">グー</label>
+  <input type="radio" name="hand" value="choki" checked>
+  <label for="choki">チョキ</label>
+  <input type="radio" name="hand" value="pa" checked>
+  <label for="pa">パー</label>
+  <input type="submit" values="じゃんけん ポン">
+  </form>
+  <hr>
+  <form acction="/app/janken">
+  <select name="hand">
+  <option value="gu">グー</option>
+  <option value="choki">チョキ</option>
+  <option value="pa">パー</option>
+  <label for="hand">何を出す？</label>
+  </select>
+  <input type="submit" values="じゃんけん ポン">
+  </form>
+</body>
+</html>
+
