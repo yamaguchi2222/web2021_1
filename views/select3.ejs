@@ -5,13 +5,12 @@
   <title>Show message</title>
 </head>
 <body>
-  <h2><%= mes %></h2>
+  <h2>都道府県ごとの男性の学生数</h2>
   <table>
       <% for( let row of data ) { %>
         <tr>
             <td><%= row.id %></td>
             <td><%= row.都道府県 %></td>
-            <td><%= row.人口 %></td>
             <td><%= row.result %></td>
         </tr>
       <% } %>

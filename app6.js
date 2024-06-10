@@ -18,7 +18,7 @@ app.get("/db", (req, res) => {
             if( error ) {
                 res.render('show', {mes:"エラーです"});
             }
-            res.render('select', {data:row});
+            res.render('select', {mes:"都道府県ごとの人口", data:row});
         })
     })
 })
@@ -34,7 +34,39 @@ app.get("/top", (req, res) => {
                 res.render('show', {mes:"エラーです"});
             }
             //console.log(data);    // ③
-            res.render('select', {data:data});
+            res.render('select', {mes:"都道府県ごとの人口", data:data});
+        })
+    })
+})
+app.get("/ban", (req, res) => {
+    //console.log(req.query.pop);    // ①
+    let desc = "";
+    if( req.query.desc ) desc = " desc";
+    let sql = "select id, 都道府県, cast(男性 as real) * 100 / cast(人口 as real) as result from example order by result" + desc + " limit " + req.query.pop + ";";
+    //console.log(sql);    // ②
+    db.serialize( () => {
+        db.all(sql, (error, data) => {
+            if( error ) {
+                res.render('show', {mes:"エラーです"});
+            }
+            //console.log(data);    // ③
+            res.render('select', {mes:"都道府県ごとの男性の割合", data:data});
+        })
+    })
+})
+app.get("/don", (req, res) => {
+    //console.log(req.query.pop);    // ①
+    let desc = "";
+    if( req.query.desc ) desc = " desc";
+    let sql = "select id, 都道府県, cast(男性 as INTEGER) * 学生数 / cast(人口 as INTEGER) as result from example order by result" + desc + " limit " + req.query.pop + ";";
+    //console.log(sql);    // ②
+    db.serialize( () => {
+        db.all(sql, (error, data) => {
+            if( error ) {
+                res.render('show', {mes:"エラーです"});
+            }
+            //console.log(data);    // ③
+            res.render('select', {mes:"都道府県ごとの男性の学生数", data:data});
         })
     })
 })
