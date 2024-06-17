@@ -7,11 +7,11 @@
 <body>
   <h2>car</h2>
   <table>
-      <% for( let row of data ) { %>
+      <% for( let data of row ) { %>
         <tr>
-            <td><%= row.id %></td>
-            <td><%= row.name %></td>
-            <td><%= row.name2 %></td>
+            <td><%= data.id %></td>
+            <td><%= data.name %></td>
+            <td><%= data.name2 %></td>
         </tr>
       <% } %>
   </table>
