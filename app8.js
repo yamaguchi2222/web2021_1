@@ -11,7 +11,7 @@ app.get("/", (req, res) => {
   const message = "Hello world";
   res.render('show', {mes:message});
 });
-
+//(9-4)//
 app.get("/car", (req, res) => {
     //console.log(req.query.pop);    // ①
    
@@ -20,6 +20,27 @@ app.get("/car", (req, res) => {
     from car
     inner join maker
     on car.maker_id=maker.id
+    `
+    //console.log(sql);    // ②
+    db.serialize( () => {
+        db.all(sql, (error, row) => {
+            if( error ) {
+                res.render('show', {mes:"エラーです"});
+            }
+            console.log(row);    // ③
+            res.render('car', {row:row});
+        })
+    })
+})
+//(9-5)//
+app.get("/food", (req, res) => {
+    //console.log(req.query.pop);    // ①
+   
+    let sql = `
+    select food.id, food.name, kind.name as name2
+    from food
+    inner join kind
+    on food.kind_id=kind.id
     `
     //console.log(sql);    // ②
     db.serialize( () => {
