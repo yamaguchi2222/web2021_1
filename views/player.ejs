@@ -1,0 +1,24 @@
+<!Doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Show message</title>
+</head>
+<body>
+  <h2><%= mes %></h2>
+  <table>
+      <% for( let row of data ) { %>
+        <tr>
+            <td><%= row.team %></td>
+            <td><%= row.team_id %></td>
+            <td><%= row.背番号 %></td>
+            <td><%= row.選手名 %></td>
+            <td><%= row.ポジション %></td>
+            <td><%= row.ヒット数 %></td>
+            <td><%= row.ホームラン数 %></td>
+        </tr>
+      <% } %>
+  </table>
+  <a href="/public/player.html">新規選手登録</a><br>
+</body>
+</html>

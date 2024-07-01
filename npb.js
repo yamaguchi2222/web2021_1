@@ -21,18 +21,46 @@ app.get("/db", (req, res) => {
     })
 })
 
+app.get("/player_db", (req, res) => {
+    db.serialize( () => {
+        db.all("select npb.チーム名 as team, 背番号, 選手名,ポジション, ヒット数, ホームラン数 from player inner join npb on player.team_id=npb.team_id;", (error, row) => {
+            if( error ) {
+                res.render('puro', {mes:"エラーです"});
+            }
+            res.render('player', {mes:"選手名鑑", data:row});
+        })
+    })
+})
+
 app.post("/insert",(req,res)=>{
 let sql=`
-insert into npb (team_id,チーム名,所在地,本拠地) values ("`+ req.body.id + `",` + req.body.team + `,` + req.body.where + `,` + req.body.stadium + `);
+insert into npb (team_id,チーム名,所在地,本拠地) values (`+ req.body.id + `,"` + req.body.team + `","` + req.body.where + `","` + req.body.stadium + `");
 `
 console.log(sql);
 db.serialize( () => {
 db.run( sql, (error, row) => {
 console.log(error);
 if(error) {
-res.render('show', {mes:"エラーです"});
+res.render('puro', {mes:"エラーです"});
 }
 res.redirect('/db');
+});
+});
+console.log(req.body);
+});
+
+app.post("/player_insert",(req,res)=>{
+let sql=`
+insert into player (team_id,背番号,選手名,ポジション,ヒット数,ホームラン数) values (`+ req.body.id + `,` + req.body.number + `,"` + req.body.name + `","` + req.body.position + `",` + req.body.hit + `,` + req.body.homerun + `);
+`
+console.log(sql);
+db.serialize( () => {
+db.run( sql, (error, row) => {
+console.log(error);
+if(error) {
+res.render('puro', {mes:"エラーです"});
+}
+res.redirect('/player_db');
 });
 });
 console.log(req.body);
