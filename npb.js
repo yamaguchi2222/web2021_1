@@ -49,6 +49,34 @@ res.redirect('/db');
 console.log(req.body);
 });
 
+app.get("/update",(req,res)=>{
+db.serialize( () => {
+        db.all("select team_id, チーム名, 所在地,本拠地 from npb;", (error, row) => {
+            if( error ) {
+                res.render('puro', {mes:"エラーです"});
+            }
+            res.render('npb2', {mes:"チーム編集", data:row});
+        })
+    })
+
+});
+
+app.post("/update",(req,res)=>{
+let sql=`
+update npb set team_id=`+ req.body.id + `,チーム名="` + req.body.team + `",所在地="` + req.body.where + `",本拠地="` + req.body.stadium + `" where team_id = ` + req.body.id + ` ;
+`
+console.log(sql);
+db.serialize( () => {
+db.run( sql, (error, row) => {
+console.log(error);
+if(error) {
+res.render('puro', {mes:"エラーです"});
+}
+res.redirect('/update');
+});
+});
+});
+
 app.post("/player_insert",(req,res)=>{
 let sql=`
 insert into player (team_id,背番号,選手名,ポジション,ヒット数,ホームラン数) values (`+ req.body.id + `,` + req.body.number + `,"` + req.body.name + `","` + req.body.position + `",` + req.body.hit + `,` + req.body.homerun + `);

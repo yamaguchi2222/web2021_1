@@ -1,0 +1,19 @@
+<!Doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>チーム編集</title>
+</head>
+<body>
+<h2>チーム編集</h2>
+<form action="/insert" method="post">
+チーム名
+<input type="text" name="team" value="<%= row.チーム名 %>">
+所在地
+<input type="text" name="where" value="<%= row.所在地 %>">
+本拠地
+<input type="text" name="stadium" value="<%= row.本拠地 %>">
+<input type="submit" value="登録">
+</form>
+</body>
+</html>
