@@ -23,7 +23,7 @@ app.get("/db", (req, res) => {
 
 app.get("/player_db", (req, res) => {
     db.serialize( () => {
-        db.all("select id, npb.チーム名 as team, 背番号, 選手名,ポジション, ヒット数, ホームラン数 from play inner join npb on play.team_id=npb.team_id;", (error, row) => {
+        db.all("select id, npb.チーム名 as team, 背番号, 選手名,ポジション, ヒット数, ホームラン数 from player inner join npb on player.team_id=npb.team_id;", (error, row) => {
             if( error ) {
                 res.render('puro', {mes:"エラーです"});
             }
@@ -55,7 +55,7 @@ db.serialize( () => {
             if( error ) {
                 res.render('puro', {mes:"エラーです"});
             }
-            res.render('npb2', {mes:"チーム編集", data:row});
+            res.render('npb_update', {mes:"チーム編集", data:row});
         })
     })
 
@@ -77,9 +77,37 @@ res.redirect('/update');
 });
 });
 
+app.get("/player_update",(req,res)=>{
+db.serialize( () => {
+        db.all("select id,team_id,背番号,選手名,ポジション,ヒット数,ホームラン数 from player;", (error, row) => {
+            if( error ) {
+                res.render('puro', {mes:"エラーです"});
+            }
+            res.render('player_update', {mes:"選手編集", data:row});
+        })
+    })
+
+});
+
+app.post("/player_update",(req,res)=>{
+let sql=`
+update player set id=`+ req.body.id + `,team_id=`+ req.body.team_id + `,背番号=`+ req.body.number + `,選手名="` + req.body.name + `",ポジション="` + req.body.position + `",ヒット数=` + req.body.hit + `,ホームラン数=` + req.body.homerun + ` where id = ` + req.body.id + ` ;
+`
+console.log(sql);
+db.serialize( () => {
+db.run( sql, (error, row) => {
+console.log(error);
+if(error) {
+res.render('puro', {mes:"エラーです"});
+}
+res.redirect('/player_update');
+});
+});
+});
+
 app.post("/player_insert",(req,res)=>{
 let sql=`
-insert into play (team_id,背番号,選手名,ポジション,ヒット数,ホームラン数) values (`+ req.body.team_id + `,` + req.body.number + `,"` + req.body.name + `","` + req.body.position + `",` + req.body.hit + `,` + req.body.homerun + ` );
+insert into player (id,team_id,背番号,選手名,ポジション,ヒット数,ホームラン数) values (`+ req.body.id + `,`+ req.body.team_id + `,` + req.body.number + `,"` + req.body.name + `","` + req.body.position + `",` + req.body.hit + `,` + req.body.homerun + ` );
 `
 console.log(sql);
 db.serialize( () => {
