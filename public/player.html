@@ -7,15 +7,27 @@
 <body>
 <h2>新規選手登録</h2>
 <form action="/player_insert" method="post">
-<input type="number" name="id">
+team_id
 <input type="number" name="team_id">
+背番号
 <input type="number" name="number">
+選手名
 <input type="text" name="name">
+ポジション
 <input type="text" name="position">
+安打数
 <input type="number" name="hit">
+ホームラン数
 <input type="number" name="homerun">
 <input type="submit" value="登録">
 </form>
+
 <a href="/public/home.html">ホーム</a><br>
+<a href="/db">プロ野球チーム一覧</a>team_idの確認はここから<br>
+<a href="/public/player.html">プロ野球選手追加</a><br>
+<a href="/public/npb.html">プロ野球チーム追加</a><br>
+<a href="/update">プロ野球チーム編集</a><br>
+<a href="/db">プロ野球チーム一覧</a><br>
+<a href="/player_update">プロ野球選手編集</a><br>
 </body>
 </html>

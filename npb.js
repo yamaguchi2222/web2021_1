@@ -23,7 +23,7 @@ app.get("/db", (req, res) => {
 
 app.get("/player_db", (req, res) => {
     db.serialize( () => {
-        db.all("select id, npb.チーム名 as team, 背番号, 選手名,ポジション, ヒット数, ホームラン数 from player inner join npb on player.team_id=npb.team_id;", (error, row) => {
+        db.all("select npb.チーム名 as team, 背番号, 選手名,ポジション, ヒット数, ホームラン数 from player inner join npb on player.team_id=npb.team_id;", (error, row) => {
             if( error ) {
                 res.render('puro', {mes:"エラーです"});
             }
@@ -107,7 +107,7 @@ res.redirect('/player_update');
 
 app.post("/player_insert",(req,res)=>{
 let sql=`
-insert into player (id,team_id,背番号,選手名,ポジション,ヒット数,ホームラン数) values (`+ req.body.id + `,`+ req.body.team_id + `,` + req.body.number + `,"` + req.body.name + `","` + req.body.position + `",` + req.body.hit + `,` + req.body.homerun + ` );
+insert into player (team_id,背番号,選手名,ポジション,ヒット数,ホームラン数) values (`+ req.body.team_id + `,` + req.body.number + `,"` + req.body.name + `","` + req.body.position + `",` + req.body.hit + `,` + req.body.homerun + ` );
 `
 console.log(sql);
 db.serialize( () => {
